@@ -6,6 +6,8 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
+using CPUSIFT::Cvec;
+
 //-! 3-1.Computation Tools funs
 void KD_Build(kdtree *&_kd, int *&_idx, const vector<Cvec> &vc) {
 

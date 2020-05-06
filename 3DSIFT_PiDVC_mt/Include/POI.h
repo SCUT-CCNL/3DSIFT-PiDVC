@@ -7,7 +7,7 @@
 #include <array>
 #include <vector>
 #include <string>
-#include "3DSIFT\Inculde\CSIFT\cSIFT3D.h"
+#include <3DSIFT_mt/Include/cSIFT3D.h>
 
 struct int_3d {
 	int x;

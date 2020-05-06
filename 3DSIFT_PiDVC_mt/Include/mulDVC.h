@@ -5,7 +5,7 @@
 #include <array>
 #include <string>
 
-#include "3DSIFT\Inculde\CSIFT\cSIFT3D.h"
+#include <3DSIFT_mt/Include/cSIFT3D.h>
 
 #include "POI.h"
 #include <fftw3.h>
@@ -113,33 +113,10 @@ private:
 	// -! Prepreation & finalization
 	void Precomputation_Prepare_global();
 	void Precomputation_Finalize();
-	void Affine_Prepare_kdtree();
-	void Affine_Finalize_kdtree();
-	void FFTCC_Prepare(int iSubsetX, int iSubsetY, int iSubsetZ);	// Make FFT plan, notice: must be run serial due to non-thread-safe api
-	void FFTCC_Finalize();				// Free FFT plan
-	void ICGN_Prepare();				// Allocate ICGN memory
-	void ICGN_Finalize();				// Free ICGN
 
 	// -! Precomputation
 	void PrecomputeGradients_mul_global();
 	void TransSplineArray();
-
-
-
-	// -! Affine fitting initial guess
-	void Affine_Compute_kdtree_Global_AUTO_EXPAND(CPOI &POI_);
-
-	// -! FFT-CC
-	void FFTCC_Compute_Global(CPOI &POI_, int iID_);		// Compute FFTCC algorithm
-	void FFTCC_MODIFY(CPOI &POI_, int iID_, float znccThres, int iSubsetX, int iSubsetY, int iSubsetZ);
-	void FFTCC_AUTO_EXPAND(CPOI &POI_);
-
-
-	// -! ICGN
-	// Inverse Gaussian matrix
-	int InverseHessian_GaussianJordan(std::vector<std::vector<float>>&m_fInvHessian,
-		std::vector<std::vector<float>>&m_fHessian);
-	void ICGN_Compute_BSPLINE_Global(CPOI &POI_, int iID_, int iMaxIteration, float fDeltaP);
 
 	// -! funs in Strategy3
 	int Collect_neighborPOI(CPOI &POI_, int *Neighbour_id);
@@ -156,28 +133,9 @@ private:
 	float ***m_fRz = nullptr;
 	float ***m_fTGBspline = nullptr;
 
-	//data structure using kd_tree for fitting Affine
-	kdtree *kd = nullptr;
-	int *kd_idx = nullptr;
 	//kdtree for POI to find neighbor POI, when using ioPreset
 	kdtree *kd_POI = nullptr;
 	int *kd_POI_idx = nullptr;
-
-	//-! 2. FFT-CC parameters
-	float *m_fSubset1 = nullptr;				// POI_1batch* [iFFTSubW * iFFTSubH * iFFTSubD]
-	float *m_fSubset2 = nullptr;				// POI_1batch* [iFFTSubW * iFFTSubH * iFFTSubD]
-	float *m_fSubsetC = nullptr;				// POI_1batch* [iFFTSubW * iFFTSubH * iFFTSubD]
-	fftwf_plan *m_fftwPlan1 = nullptr;
-	fftwf_plan *m_fftwPlan2 = nullptr;
-	fftwf_plan *m_rfftwPlan = nullptr;
-	fftwf_complex	*m_FreqDom1 = nullptr;	// POI_1batch* [iFFTSubW * iFFTSubH * (iFFTSubD/2 + 1)]
-	fftwf_complex	*m_FreqDom2 = nullptr;	// POI_1batch* [iFFTSubW * iFFTSubH * (iFFTSubD/2 + 1)]
-	fftwf_complex	*m_FreqDomfg = nullptr;	// POI_1batch* [iFFTSubW * iFFTSubH * (iFFTSubD/2 + 1)]
-
-	//-! 3. ICGN parameters
-	float ****m_fSubsetR = nullptr;							// ICGN Subset of Resourse 
-	float ****m_fSubsetT = nullptr;							// ICGN Subset of Target
-	float *****m_fRDescent = nullptr;							// ICGN deltaR * (dW/dP);
 
 	//Internal Parameters for DVC
 	bool m_bIsExecuted;
@@ -185,25 +143,13 @@ private:
 	int m_iOriginROIHeight;			//=m_iOriginVolHeight-2
 	int m_iOriginROIDepth;			//=m_iOriginVolDepth-2
 	
-	//ICGN
-	float m_dDeltaP;
-	int m_iMaxIterationNum;
 	int m_iWholeTotalIterations = 0;
 	
-	//-! ICGN subset size 
+	//-! subset size 
 	int m_iSubsetX;
 	int m_iSubsetY;
 	int m_iSubsetZ;
 	
-	//PiSIFT initial parameters, minimum neighbor kps
-	int m_iMinNeighbor;
-
-	//currently non-used parameters
-	float m_iExpandRatio = 1.2;
-	int m_iSubsetXExpand; //FFT-CC auto expanding
-	int m_iSubsetZExpand;
-	int m_iSubsetYExpand;
-
 	int thread_num;
 
 public:

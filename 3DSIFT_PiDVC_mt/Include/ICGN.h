@@ -52,6 +52,10 @@ public:
 	void preCompute() {};
 	void free();
 	void compute(CPOI &POI_);
+
+	float getDeltaP() { return m_dDeltaP; };
+	int getMaxIter() { return m_iMaxIterationNum; };
+
 };
 
 #endif

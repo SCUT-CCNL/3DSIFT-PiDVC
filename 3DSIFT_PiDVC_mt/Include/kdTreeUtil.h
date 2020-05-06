@@ -3,7 +3,7 @@
 
 #include <kdtree.h>
 #include <vector>
-//#include 
+#include <3DSIFT_mt/Include/cSIFT3D.h>
 
 // -! KD-Tree Tools
 void KD_Build(kdtree *&_kd, int *&_idx, const std::vector<CPUSIFT::Cvec> &vc);

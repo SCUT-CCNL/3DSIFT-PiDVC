@@ -1,7 +1,7 @@
 #include <cstring>
 #include <cctype>
 #include <cmath>
-#include "matrixIO3D.h"
+#include "../Include/matrixIO3D.h"
 
 
 //-! writes out the m x n x p matrix onto the stream, in binary format

@@ -70,11 +70,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\Include;$(ProjectDir)3party\kdTree;$(ProjectDir)3party\yaml-cpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\Include;$(ProjectDir)3party\kdTree;$(ProjectDir)3party\yaml-cpp\include;$(ProjectDir)3DSIFT\;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\lib;$(ProjectDir)3party\yaml-cpp\Debug;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\Include;$(ProjectDir)3party\kdTree;$(ProjectDir)3party\yaml-cpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\Include;$(ProjectDir)3party\kdTree;$(ProjectDir)3party\yaml-cpp\include;$(ProjectDir)3DSIFT\;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\lib;$(ProjectDir)3party\yaml-cpp\Release;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -94,6 +94,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +125,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

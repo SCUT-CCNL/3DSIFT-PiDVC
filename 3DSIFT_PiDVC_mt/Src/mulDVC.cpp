@@ -16,6 +16,7 @@
 #include <mutex>
 
 #include <fftw3.h>
+#include "../Include/kdTreeUtil.h"
 #include "../Include/MemManager.h"
 #include "../Include/matrixIO3D.h"
 #include "../Include/FitFormula.h"
@@ -33,18 +34,6 @@ using namespace CPUSIFT;
 /*
 	tools func used in calculation
 */
-
-inline float dist_Cvec(const Cvec &c1, const Cvec &c2){
-	return sqrtf(dist_square_Cvec(c1, c2));
-}
-
-inline float dist_square_Cvec(const Cvec &c1, const Cvec &c2) {
-	float dx = c1.x - c2.x;
-	float dy = c1.y - c2.y;
-	float dz = c1.z - c2.z;
-	return dx*dx + dy*dy + dz*dz;
-}
-
 vector<float> Calculate_P0_full(CPOI &ControlPoint, CPOI &POI_) {
 
 	auto P = ControlPoint.P();
@@ -640,17 +629,17 @@ void CPaDVC::SaveResult2Text_global_d(const string qstrOutputPath_,
 
 	if (initMethod == PiSIFT) {
 		oFile << "------PiSIFT guess parameters:------" << std::endl;
-		oFile << "Minimum neighor num:" << m_iMinNeighbor << "\n"
-			<< "Ransac error epsilon:" << ransacCompute.ransacErrorEpsilon << "\n"
-			<< "Ransac iter num:" << ransacCompute.ransacMaxIterNum << "\n"
-			<< "expand serach radius ratio:" << m_iExpandRatio << "\n" 
+		oFile << "Minimum neighor num:" << siftGuessCompute.getMinNeighborNum()<< "\n"
+			<< "Ransac error epsilon:" << siftGuessCompute.getRansacEpsilon()<< "\n"
+			<< "Ransac iter num:" << siftGuessCompute.getRansacIter() << "\n"
+			<< "expand serach radius ratio:" << siftGuessCompute.getExpandRatio() << "\n"
 			<< "Number of matches:" << Ref_point.size() << std::endl;
 		oFile << "------------------------------------" << std::endl;
 	}
 
 	oFile << "----------ICGN parameters:----------" << std::endl;
-	oFile << "deltaP:" << m_dDeltaP << "\n"
-		  << "IC-GN max iter:" << m_iMaxIterationNum << std::endl;
+	oFile << "deltaP:" << icgnCompute.getDeltaP() << "\n"
+		  << "IC-GN max iter:" << icgnCompute.getMaxIter() << std::endl;
 	oFile << "------------------------------------" << std::endl;
 
 	oFile << "Sift Part Time:" << endl;

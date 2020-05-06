@@ -1,7 +1,8 @@
 #include "../Include/FFTCC.h"
 #include "../Include/MemManager.h"
+
 #include <iostream>
-#include <fftw3.h>
+#include <vector>
 #include <omp.h>
 
 using namespace std;
@@ -28,9 +29,9 @@ void fftccGuess::init(
 	const int iFFTSubD = m_iSubsetZ * 2;
 	//int iNumberofPOI1Batch = m_iNumberX*m_iNumberY*m_iNumberZ;
 
-	CMemManager<float>::hCreatePtr(m_fSubset1, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
-	CMemManager<float>::hCreatePtr(m_fSubset2, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
-	CMemManager<float>::hCreatePtr(m_fSubsetC, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
+	//CMemManager<float>::hCreatePtr(m_fSubset1, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
+	//CMemManager<float>::hCreatePtr(m_fSubset2, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
+	//CMemManager<float>::hCreatePtr(m_fSubsetC, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
 
 	m_FreqDom1 = (fftwf_complex*)fftw_malloc(sizeof(fftwf_complex)*thread_num*iFFTSubW*iFFTSubH*(iFFTSubD / 2 + 1));
 	m_FreqDom2 = (fftwf_complex*)fftw_malloc(sizeof(fftwf_complex)*thread_num*iFFTSubW*iFFTSubH*(iFFTSubD / 2 + 1));
@@ -50,11 +51,11 @@ void fftccGuess::init(
 
 void fftccGuess::free() {
 	if (m_fSubset1 != nullptr)
-		CMemManager<float>::hDestroyPtr(m_fSubset1);
+		//CMemManager<float>::hDestroyPtr(m_fSubset1);
 	if (m_fSubset2 != nullptr)
-		CMemManager<float>::hDestroyPtr(m_fSubset2);
+		//CMemManager<float>::hDestroyPtr(m_fSubset2);
 	if (m_fSubsetC != nullptr)
-		CMemManager<float>::hDestroyPtr(m_fSubsetC);
+		//CMemManager<float>::hDestroyPtr(m_fSubsetC);
 
 	if (m_fftwPlan1 != nullptr) {
 		for (int i = 0; i < thread_num; i++)

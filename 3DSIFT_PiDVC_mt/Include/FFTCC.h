@@ -4,8 +4,10 @@
 #include "compute.h"
 #include "POI.h"
 
+#include "fftw3.h"
+
 class fftccGuess : public computePOI {
-	
+
 	//-!Volume
 	float *m_fVolR = nullptr;
 	float *m_fVolT = nullptr;
@@ -28,8 +30,8 @@ public:
 	fftccGuess() {};
 	~fftccGuess() {};
 
-	void init(const int threadNum, 
-		float *fVolR, float *fVolT, 
+	void init(const int threadNum,
+		float *fVolR, float *fVolT,
 		int iOriginVolWidth, int iOriginVolHeight, int iOriginVolDepth);
 
 	void preCompute() {};

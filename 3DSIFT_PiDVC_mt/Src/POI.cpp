@@ -1,10 +1,10 @@
-#include "POI.h"
+
+#include "../Include/POI.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <omp.h>
-
-#include "util.h"
+#include "../Include/MemManager.h"
 
 using namespace std;
 

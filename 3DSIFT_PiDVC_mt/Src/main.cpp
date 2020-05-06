@@ -15,9 +15,9 @@
 #include "../Include/conf.h"
 
 #include <yaml-cpp/yaml.h>
-#include "3DSIFT\Inculde\CSIFT\cSIFT3D.h"
-#include "3DSIFT\Inculde\CSIFT\cUtil.h"
-#include "3DSIFT\Inculde\CSIFT\cMatcher.h"
+#include <3DSIFT_mt/Include/cSIFT3D.h>
+#include <3DSIFT_mt/Include/cUtil.h>
+#include <3DSIFT_mt/Include/cMatcher.h>
 
 
 using namespace std;

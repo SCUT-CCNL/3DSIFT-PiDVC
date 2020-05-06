@@ -5,9 +5,10 @@
 #include<array>
 #include<random>
 
-//#include"SIFT3D.h"
+#include <kdtree.h>
+
 #include "compute.h"
-#include "3DSIFT\Inculde\CSIFT\cSIFT3D.h"
+#include <3DSIFT_mt/Include/cSIFT3D.h>
 #include "POI.h"
 
 #define MIN_NEIGHBOUR_KP_NUM 16
@@ -85,6 +86,11 @@ public:
 	void preCompute();
 	void free();
 	void compute(CPOI &POI_);
+
+	int getMinNeighborNum() { return m_iMinNeighbor; };
+	float getExpandRatio() { return m_fExpandRatio; };
+	int getRansacIter() { return _ransacCompute.ransacMaxIterNum; };
+	int getRansacEpsilon() { return _ransacCompute.ransacErrorEpsilon; };
 
 };
 

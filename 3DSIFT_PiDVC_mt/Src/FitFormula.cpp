@@ -28,6 +28,18 @@ void TransferLocalCoor(vector<Cvec> &vc, const Cvec origin) {
 		CvecSubtract(ci, origin);
 }
 
+inline float dist_square_Cvec(const Cvec &c1, const Cvec &c2) {
+	float dx = c1.x - c2.x;
+	float dy = c1.y - c2.y;
+	float dz = c1.z - c2.z;
+	return dx * dx + dy * dy + dz * dz;
+}
+
+inline float dist_Cvec(const Cvec &c1, const Cvec &c2) {
+	return sqrtf(dist_square_Cvec(c1, c2));
+}
+
+
 float maxDistanceSquareTo(const vector<Cvec> &vc, const Cvec &target) {
 	float maxDistSq = 0.0;
 	for (auto ci : vc) {
