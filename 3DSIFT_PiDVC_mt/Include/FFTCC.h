@@ -4,7 +4,7 @@
 #include "compute.h"
 #include "POI.h"
 
-#include "fftw3.h"
+#include <fftw3.h>
 
 class fftccGuess : public computePOI {
 
@@ -37,6 +37,6 @@ public:
 	void preCompute() {};
 	void free();
 	void compute(CPOI &POI_);
-}
+};
 
 #endif

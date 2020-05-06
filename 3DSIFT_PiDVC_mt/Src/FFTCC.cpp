@@ -1,9 +1,10 @@
 #include "../Include/FFTCC.h"
-#include "../Include/MemManager.h"
 
 #include <iostream>
 #include <vector>
 #include <omp.h>
+
+#include "../Include/MemManager.h"
 
 using namespace std;
 
@@ -27,11 +28,10 @@ void fftccGuess::init(
 	const int iFFTSubW = m_iSubsetX * 2;
 	const int iFFTSubH = m_iSubsetY * 2;
 	const int iFFTSubD = m_iSubsetZ * 2;
-	//int iNumberofPOI1Batch = m_iNumberX*m_iNumberY*m_iNumberZ;
 
-	//CMemManager<float>::hCreatePtr(m_fSubset1, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
-	//CMemManager<float>::hCreatePtr(m_fSubset2, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
-	//CMemManager<float>::hCreatePtr(m_fSubsetC, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
+	CMemManager<float>::hCreatePtr(m_fSubset1, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
+	CMemManager<float>::hCreatePtr(m_fSubset2, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
+	CMemManager<float>::hCreatePtr(m_fSubsetC, thread_num*iFFTSubD*iFFTSubH*iFFTSubW);
 
 	m_FreqDom1 = (fftwf_complex*)fftw_malloc(sizeof(fftwf_complex)*thread_num*iFFTSubW*iFFTSubH*(iFFTSubD / 2 + 1));
 	m_FreqDom2 = (fftwf_complex*)fftw_malloc(sizeof(fftwf_complex)*thread_num*iFFTSubW*iFFTSubH*(iFFTSubD / 2 + 1));
@@ -51,11 +51,11 @@ void fftccGuess::init(
 
 void fftccGuess::free() {
 	if (m_fSubset1 != nullptr)
-		//CMemManager<float>::hDestroyPtr(m_fSubset1);
+		CMemManager<float>::hDestroyPtr(m_fSubset1);
 	if (m_fSubset2 != nullptr)
-		//CMemManager<float>::hDestroyPtr(m_fSubset2);
+		CMemManager<float>::hDestroyPtr(m_fSubset2);
 	if (m_fSubsetC != nullptr)
-		//CMemManager<float>::hDestroyPtr(m_fSubsetC);
+		CMemManager<float>::hDestroyPtr(m_fSubsetC);
 
 	if (m_fftwPlan1 != nullptr) {
 		for (int i = 0; i < thread_num; i++)
@@ -87,7 +87,6 @@ void fftccGuess::compute(CPOI &POI_) {
 
 	const int iID_ = omp_get_thread_num();
 
-	//StopWatchWin fftccWatch;
 	POI_.SetProcessed(1);
 
 	int iFFTSubW = m_iSubsetX * 2;
@@ -105,10 +104,7 @@ void fftccGuess::compute(CPOI &POI_) {
 	m_fSubAveR = 0;	// R_m
 	m_fSubAveT = 0;	// T_m
 
-					// Start timer for FFT-CC algorithm
-					//fftccWatch.start();
-
-					// Feed the grey intensity values into subvolumes
+	// Feed the grey intensity values into subvolumes
 	float ref_voxel, tar_voxel;
 	for (int l = 0; l < iFFTSubD; l++)
 	{
