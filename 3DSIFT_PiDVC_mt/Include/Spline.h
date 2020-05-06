@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __PIDVC_SPLINE_H__
+#define __PIDVC_SPLINE_H__
 
 #include <math.h>
 #include <omp.h>
@@ -322,3 +323,4 @@ int Prefilter(real *Data, real *Coeffi, const int width , const int height, cons
 	return 0;
 }
 
+#endif

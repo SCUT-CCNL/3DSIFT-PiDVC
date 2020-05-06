@@ -1,6 +1,5 @@
-#pragma once
-#ifndef PIDVC_PRIORITY_QUEUE
-#define PIDVC_PRIORITY_QUEUE
+#ifndef __PIDVC_PRIORITY_QUEUE_H__
+#define __PIDVC_PRIORITY_QUEUE_H__
 
 #include"POI.h"
 #include<concurrent_priority_queue.h> //perhaps windows only

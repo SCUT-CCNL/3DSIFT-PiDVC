@@ -9,17 +9,16 @@
 #include <chrono>
 #include <omp.h>
 
-#include "MemManager.h"
-#include "mulDVC.h"
-#include "util.h"
-#include "matrixIO3D.h"
+#include "../Include/MemManager.h"
+#include "../Include/mulDVC.h"
+#include "../Include/matrixIO3D.h"
+#include "../Include/conf.h"
 
-#include "yaml-cpp/yaml.h"
+#include <yaml-cpp/yaml.h>
 #include "3DSIFT\Inculde\CSIFT\cSIFT3D.h"
 #include "3DSIFT\Inculde\CSIFT\cUtil.h"
 #include "3DSIFT\Inculde\CSIFT\cMatcher.h"
 
-#include "conf.h"
 
 using namespace std;
 

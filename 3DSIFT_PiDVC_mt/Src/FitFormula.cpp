@@ -1,4 +1,4 @@
-#include "FitFormula.h"
+#include "../Include/FitFormula.h"
 
 #include<iostream>
 #include<sstream>
@@ -9,10 +9,34 @@
 #include<cfloat>
 #include<omp.h>
 
+#include "../Include/kdTreeUtil.h"
+
 #include<Eigen/core>
 #include<Eigen/dense>
 
 using namespace CPUSIFT;
+using namespace std;
+
+inline void CvecSubtract(Cvec &c1, const Cvec &c2) {
+	c1.x -= c2.x;
+	c1.y -= c2.y;
+	c1.z -= c2.z;
+}
+
+void TransferLocalCoor(vector<Cvec> &vc, const Cvec origin) {
+	for (auto &ci : vc)
+		CvecSubtract(ci, origin);
+}
+
+float maxDistanceSquareTo(const vector<Cvec> &vc, const Cvec &target) {
+	float maxDistSq = 0.0;
+	for (auto ci : vc) {
+		float dist_sq = dist_square_Cvec(ci, target);
+		if (dist_sq > maxDistSq)
+			maxDistSq = dist_sq;
+	}
+	return maxDistSq;
+}
 
 float error_square(Cvec& ref, Cvec& tar, const float * const affine)
 {
@@ -172,3 +196,159 @@ int mulFitFormula::LeastSquares(std::vector<Cvec>& points1, std::vector<Cvec>& p
 
 	return 0;
 };
+
+//
+
+void siftGuess::init(
+	const int threadNum,
+	const std::vector<CPUSIFT::Cvec> &vRefPoint,
+	const std::vector<CPUSIFT::Cvec> &vTarPoint) {
+
+	thread_num = threadNum;
+
+	_ransacCompute.init_random(thread_num);
+	Ref_point = vRefPoint;
+	Tar_point = vTarPoint;
+
+}
+
+
+void siftGuess::setParameters(const int minNeighNum, const float maxExpandRatio, const float errorEpsilon, const int maxIter) {
+	m_iMinNeighbor = minNeighNum;
+	m_fExpandRatio = maxExpandRatio;
+	_ransacCompute.setParam(errorEpsilon, maxIter);
+}
+
+void siftGuess::preCompute() {
+	KD_Build(kd, kd_idx, Ref_point);
+}
+
+void siftGuess::free() {
+	KD_Destroy(kd, kd_idx);
+}
+
+void siftGuess::compute(CPOI &POI_) {
+
+	//Get global coordinate
+	int x = POI_.G_X();
+	int y = POI_.G_Y();
+	int z = POI_.G_Z();
+
+
+	//Set range
+	double range = sqrt(m_iSubsetX*m_iSubsetX + m_iSubsetY * m_iSubsetY + m_iSubsetZ * m_iSubsetZ) + 0.01;//experiment
+	int enough = 1;
+
+	//transform the result into vector of cvec to get the affine transformation matrix and initial guess
+	vector<Cvec> tmp_ref, tmp_tar;
+	vector<int> tmp_index;
+
+	KD_RangeSerach(kd, tmp_ref, tmp_index, Cvec(x, y, z), range);
+	for (auto i : tmp_index)
+		tmp_tar.push_back(Tar_point[i]);
+	TransferLocalCoor(tmp_ref, Cvec(x, y, z));
+	TransferLocalCoor(tmp_tar, Cvec(x, y, z));
+
+	if (tmp_ref.size() >= m_iMinNeighbor) {
+		// Examine whether Inside SubVolume Enough
+		vector<Cvec> tmp_inside_ref, tmp_inside_tar;
+		vector<int> tmp_inside_idx;
+		float x_border = static_cast<float>((m_iSubsetX)) + EPSILON;
+		float y_border = static_cast<float>((m_iSubsetY)) + EPSILON;
+		float z_border = static_cast<float>((m_iSubsetZ)) + EPSILON;
+		for (int i = 0; i < tmp_index.size(); ++i) {
+			//inside the subvolume
+			//coordinate of tmp_ref is local, hence not subtraction
+			if (fabsf(tmp_ref[i].x) < x_border &&
+				fabsf(tmp_ref[i].y) < y_border &&
+				fabsf(tmp_ref[i].z) < z_border) {
+				//put KPs inside subvolume into temporary vectors.
+				tmp_inside_ref.push_back(tmp_ref[i]);
+				tmp_inside_tar.push_back(tmp_tar[i]);
+				tmp_inside_idx.push_back(tmp_index[i]);
+			}
+		}
+		if (tmp_inside_ref.size() >= m_iMinNeighbor) {
+			//using KPs inside the box when enough 
+			tmp_ref = tmp_inside_ref;
+			tmp_tar = tmp_inside_tar;
+			tmp_index = tmp_inside_idx;
+			POI_.SetStrategy(Search_Subset);
+		}
+		else {
+			// otherwise, using KPs of the circumscribed ball
+			POI_.SetSearchRadius(range);
+			POI_.SetStrategy(Search_Radius);
+		}
+	}
+	else {
+		// Not Enough KP in subvolume or circumscribed ball
+		// Auto extending
+		// KNN search is performed
+		tmp_ref.clear();
+		tmp_tar.clear();
+		tmp_index.clear();
+		const float up_radius_square = m_fExpandRatio * m_fExpandRatio * range * range;
+
+		KD_KNNSerach(kd, tmp_ref, tmp_index, Cvec(x, y, z), m_iMinNeighbor);
+		TransferLocalCoor(tmp_ref, Cvec(x, y, z));
+		float maxDist = maxDistanceSquareTo(tmp_ref, Cvec(0, 0, 0));
+
+		if (maxDist > up_radius_square) {
+			//searching out of max range
+			enough = 0;
+			POI_.SetRangeGood(enough);
+			POI_.SetEmpty(1);
+			return;
+		}
+		else {
+			for (auto i : tmp_index)
+				tmp_tar.push_back(Tar_point[i]);
+			TransferLocalCoor(tmp_tar, Cvec(x, y, z));
+			POI_.SetSearchRadius(sqrtf(maxDist));
+			POI_.SetStrategy(Search_Expand_Radius);
+		}
+
+	}
+
+	if (tmp_ref.size() < 4)
+		return;
+	//store candidate key point pairs
+	POI_.c_ref = tmp_ref;
+	POI_.c_tar = tmp_tar;
+	POI_.s_idx = tmp_index;
+	POI_.num_candidate = tmp_ref.size();
+
+	_ransacCompute.Ransac(tmp_ref, tmp_tar, POI_.m_fAffine, POI_.f_ref, POI_.f_tar);
+
+	vector<float>tempP0(12, 0);
+	// U V W 
+	tempP0[0] = POI_.m_fAffine[9];
+	tempP0[4] = POI_.m_fAffine[10];
+	tempP0[8] = POI_.m_fAffine[11];
+
+	// Ux Uy Uz
+	tempP0[1] = POI_.m_fAffine[0] - 1;
+	tempP0[2] = POI_.m_fAffine[3];
+	tempP0[3] = POI_.m_fAffine[6];
+
+	// Vx Vy Vz
+	tempP0[5] = POI_.m_fAffine[1];
+	tempP0[6] = POI_.m_fAffine[4] - 1;
+	tempP0[7] = POI_.m_fAffine[7];
+
+	// Wx Wy Wz
+	tempP0[9] = POI_.m_fAffine[2];
+	tempP0[10] = POI_.m_fAffine[5];
+	tempP0[11] = POI_.m_fAffine[8] - 1;
+
+	POI_.SetP0(tempP0);
+	POI_.SetRangeGood(enough);
+	POI_.SetEmpty(0);
+	POI_.num_final = POI_.f_ref.size();
+
+	tmp_ref.clear();
+	tmp_tar.clear();
+	tmp_ref.shrink_to_fit();
+	tmp_tar.shrink_to_fit();
+}

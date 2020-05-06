@@ -16,15 +16,24 @@
     <Filter Include="Header\InitialGuess">
       <UniqueIdentifier>{f52e0ac0-8b80-4bec-a3a1-58d2a9ccc031}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header\Util">
+      <UniqueIdentifier>{81085b14-5e70-4ef5-9edf-c03f9e4ad479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\ICGN">
+      <UniqueIdentifier>{7397e89c-c449-4b96-92ba-a4b084758ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\InitialGuess">
+      <UniqueIdentifier>{5ac82af1-fc4e-4271-86b3-d7e4cc478255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ICGN">
+      <UniqueIdentifier>{f5f8f518-4fc1-4d5b-be0d-04f346cbcb62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Util">
+      <UniqueIdentifier>{046bf40c-ec14-4c58-a50a-78907cf5ee0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\conf.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="Include\matrixIO3D.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\MemManager.h">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Include\mulDVC.h">
@@ -33,20 +42,35 @@
     <ClInclude Include="Include\POI.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="Include\PriorityQueue.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Spline.h">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Include\FitFormula.h">
       <Filter>Header\InitialGuess</Filter>
     </ClInclude>
+    <ClInclude Include="Include\FFTCC.h">
+      <Filter>Header\InitialGuess</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\compute.h">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\conf.h">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PriorityQueue.h">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\MemManager.h">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ICGN.h">
+      <Filter>Header\ICGN</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\kdTreeUtil.h">
+      <Filter>Header\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\FitFormula.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Src\matrixIO3D.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -56,9 +80,21 @@
     <ClCompile Include="Src\POI.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Src\PriorityQueue.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\FFTCC.cpp">
+      <Filter>Source\InitialGuess</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FitFormula.cpp">
+      <Filter>Source\InitialGuess</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ICGN.cpp">
+      <Filter>Source\ICGN</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PriorityQueue.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\kdTreeUtil.cpp">
+      <Filter>Source\Util</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

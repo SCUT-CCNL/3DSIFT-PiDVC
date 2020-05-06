@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -69,7 +69,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\Include;$(ProjectDir)3party\kdTree;$(ProjectDir)3party\yaml-cpp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\lib;$(ProjectDir)3party\yaml-cpp\Debug;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\Include;$(ProjectDir)3party\kdTree;$(ProjectDir)3party\yaml-cpp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)3party\Eigen;$(ProjectDir)3party\fftw\lib;$(ProjectDir)3party\yaml-cpp\Release;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -90,6 +97,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>libyaml-cppmdd.lib;libfftw3-3.lib;libfftw3f-3.lib;libfftw3l-3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,11 +128,16 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>libyaml-cppmd.lib;libfftw3-3.lib;libfftw3f-3.lib;libfftw3l-3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\compute.h" />
     <ClInclude Include="Include\conf.h" />
+    <ClInclude Include="Include\FFTCC.h" />
     <ClInclude Include="Include\FitFormula.h" />
+    <ClInclude Include="Include\ICGN.h" />
+    <ClInclude Include="Include\kdTreeUtil.h" />
     <ClInclude Include="Include\matrixIO3D.h" />
     <ClInclude Include="Include\MemManager.h" />
     <ClInclude Include="Include\mulDVC.h" />
@@ -133,7 +146,10 @@
     <ClInclude Include="Include\Spline.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\FFTCC.cpp" />
     <ClCompile Include="Src\FitFormula.cpp" />
+    <ClCompile Include="Src\ICGN.cpp" />
+    <ClCompile Include="Src\kdTreeUtil.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\matrixIO3D.cpp" />
     <ClCompile Include="Src\mulDVC.cpp" />

@@ -1,5 +1,5 @@
-#ifndef _CPOI_H_
-#define _CPOI_H_
+#ifndef __PIDVC_CPOI_H__
+#define __PIDVC_CPOI_H__
 
 //-! Class for an individual POI
 

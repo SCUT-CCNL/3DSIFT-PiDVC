@@ -1,5 +1,5 @@
-#ifndef  __CONF_H__
-#define __CONF_H__
+#ifndef __PIDVC_CONF_H__
+#define __PIDVC_CONF_H__
 
 #include <iostream>
 #include <sstream>

@@ -1,5 +1,5 @@
-#ifndef _MULDVC_H_
-#define _MULDVC_H_
+#ifndef __PIDVC_MULDVC_H__
+#define __PIDVC_MULDVC_H__
 
 #include <vector>
 #include <array>
@@ -8,11 +8,12 @@
 #include "3DSIFT\Inculde\CSIFT\cSIFT3D.h"
 
 #include "POI.h"
-#include "fftw3.h"
-//#include "SIFT3D.h"
-#include "kdtree.h"
+#include <fftw3.h>
+#include <kdtree.h>
 #include "PriorityQueue.h"
+#include "FFTCC.h"
 #include "FitFormula.h"
+#include "ICGN.h"
 
 #define RADIUS_FACTOR 1.2f
 #define ZNCC_THRES 0.8f
@@ -102,7 +103,10 @@ public:
 
 
 private:
-	mulFitFormula ransacCompute;
+	fftccGuess fftccGuessCompute;
+	siftGuess siftGuessCompute;
+	icgnRegistration icgnCompute;
+	//mulFitFormula ransacCompute;
 
 	void Destroy();
 
@@ -120,11 +124,7 @@ private:
 	void PrecomputeGradients_mul_global();
 	void TransSplineArray();
 
-	// -! KD-Tree Tools
-	void KD_Build(kdtree *&_kd, int *&_idx, const std::vector<CPUSIFT::Cvec> &vc);
-	void KD_Destroy(kdtree *&_kd, int *&_idx);
-	void KD_RangeSerach(kdtree* _kd, std::vector<CPUSIFT::Cvec> &neighbor, std::vector<int> &idx, const CPUSIFT::Cvec query, const double range);
-	void KD_KNNSerach(kdtree* _kd, std::vector<CPUSIFT::Cvec> &neighbor, std::vector<int> &idx, const CPUSIFT::Cvec query, const int K);
+
 
 	// -! Affine fitting initial guess
 	void Affine_Compute_kdtree_Global_AUTO_EXPAND(CPOI &POI_);

@@ -1,12 +1,14 @@
-#ifndef _CPU_FIT_FORMULA_H_
-#define _CPU_FIT_FORMULA_H_
+#ifndef __PIDVC_FIT_FORMULA_H__
+#define __PIDVC_FIT_FORMULA_H__
 
 #include<vector>
 #include<array>
 #include<random>
 
 //#include"SIFT3D.h"
+#include "compute.h"
 #include "3DSIFT\Inculde\CSIFT\cSIFT3D.h"
+#include "POI.h"
 
 #define MIN_NEIGHBOUR_KP_NUM 16
 #define EPSILON 0.01
@@ -53,6 +55,37 @@ private:
 	std::vector<std::uniform_int_distribution<int>> vIntDistribution;
 	std::array<int, 4> get4index(int num);
 	float consensus(float * affine, std::vector<CPUSIFT::Cvec>& points1, std::vector<CPUSIFT::Cvec>& points2, std::vector<int>& indices);
+};
+
+class siftGuess : public computePOI{
+	//ransac compute class
+	mulFitFormula _ransacCompute;
+
+	//
+	std::vector<CPUSIFT::Cvec> Ref_point;
+	std::vector<CPUSIFT::Cvec> Tar_point;
+	
+	//data structure using kd_tree for fitting Affine
+	kdtree *kd = nullptr;
+	int *kd_idx = nullptr;
+
+	//parameters
+	int m_iMinNeighbor = 16;
+	float m_fExpandRatio = 1.2f;
+
+public:
+	siftGuess() {};
+	~siftGuess() {};
+	void init(
+		const int threadNum, 
+		const std::vector<CPUSIFT::Cvec> &vRefPoint, 
+		const std::vector<CPUSIFT::Cvec> &vTarPoint);
+	void setParameters(const int minNeighNum, const float maxExpandRatio, const float errorEpsilon, const int maxIter);
+	
+	void preCompute();
+	void free();
+	void compute(CPOI &POI_);
+
 };
 
 #endif // !_REG_H_

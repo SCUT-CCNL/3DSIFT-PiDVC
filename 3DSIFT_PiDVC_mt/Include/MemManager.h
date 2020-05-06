@@ -1,14 +1,16 @@
-
-//!= Class responsible for the memory allocation and deallocation
-
-#ifndef _CCMEMMANAGER_H_
-#define _CCMEMMANAGER_H_
+#ifndef __PIDVC_CCMEMMANAGER_H__
+#define __PIDVC_CCMEMMANAGER_H__
 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 //#include <omp.h>
+
+#ifndef ELT
+#define ELT(height,width,x,y,z) ((((long)z)*((long)height)+((long)y))*((long)width)+(long)x)
+#define ELT2(x, y, z, x_stride, y_stride, z_stride) (long)((x) * x_stride + (y) * y_stride + (z) * z_stride)
+#endif
 
 template<class T>
 class CMemManager
