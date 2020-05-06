@@ -96,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp14</LanguageStandard>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SIFT_LIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +128,7 @@
       <ConformanceMode>true</ConformanceMode>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp14</LanguageStandard>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SIFT_LIBRARY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +138,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\cMatcher.h" />
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\cSIFT3D.h" />
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\cUtil.h" />
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\Util\cMemManager.h" />
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\Util\common.h" />
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\Util\cTexImage.h" />
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\Util\matrixIO3D.h" />
+    <ClInclude Include="3DSIFT\3DSIFT_mt\Include\Util\SiftTime.h" />
+    <ClInclude Include="3party\kdTree\kdtree.h" />
     <ClInclude Include="Include\compute.h" />
     <ClInclude Include="Include\conf.h" />
     <ClInclude Include="Include\FFTCC.h" />
@@ -150,6 +161,13 @@
     <ClInclude Include="Include\Spline.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3DSIFT\3DSIFT_mt\Src\cMatcher.cc" />
+    <ClCompile Include="3DSIFT\3DSIFT_mt\Src\cSIFT3D.cc" />
+    <ClCompile Include="3DSIFT\3DSIFT_mt\Src\cUtil.cc" />
+    <ClCompile Include="3DSIFT\3DSIFT_mt\Src\Util\common.cpp" />
+    <ClCompile Include="3DSIFT\3DSIFT_mt\Src\Util\cTexImage.cc" />
+    <ClCompile Include="3DSIFT\3DSIFT_mt\Src\Util\matrixIO3D.cpp" />
+    <ClCompile Include="3party\kdTree\kdtree.cpp" />
     <ClCompile Include="Src\FFTCC.cpp" />
     <ClCompile Include="Src\FitFormula.cpp" />
     <ClCompile Include="Src\ICGN.cpp" />
