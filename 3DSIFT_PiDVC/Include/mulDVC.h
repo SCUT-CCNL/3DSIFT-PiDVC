@@ -96,9 +96,7 @@ public:
 
 	void SaveResult2Text_global_d(
 		const std::string cstrOutputPath_,
-		SIFT_PROCESS SIFT_TIME, GuessMethod initMethod,
-		const std::string  c_ref_ = std::string(""), const std::string  c_tar_ = std::string(""),
-		const std::string  f_ref_ = std::string(""), const std::string  f_tar_ = std::string(""));
+		SIFT_PROCESS SIFT_TIME, GuessMethod initMethod);
 
 
 

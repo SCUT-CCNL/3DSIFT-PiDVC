@@ -14,18 +14,6 @@
 #define MIN_NEIGHBOUR_KP_NUM 16
 #define EPSILON 0.01
 
-//--------------------------------------------------------------------------------
-
-//typedef struct coorNdesc
-//{
-//	int match_idx;//set -1 at first
-//	float rx, ry, rz;
-//	float desc[DESC_LENGTH];
-//}keyPoint;
-
-
-//--------------------------------------------------------------------------------
-
 struct mulFitFormula {
 
 	float ransacErrorEpsilon = 3.0f;

@@ -205,6 +205,7 @@ SIFT_PROCESS Sift_(const string Ref_file_name, const string Tar_file_name, CPaDV
 
         start = clock();
 
+        //REF SIFT EXTRACT
         auto Ref_SIFT3D = CPUSIFT::CSIFT3DFactory::CreateCSIFT3D(sepaDVC->m_fVolR, sepaDVC->m_iOriginVolWidth, sepaDVC->m_iOriginVolHeight, sepaDVC->m_iOriginVolDepth);
         Ref_SIFT3D->KpSiftAlgorithm();
         m_SIFT_TIME.REF = Ref_SIFT3D->m_timer;

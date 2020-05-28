@@ -364,3 +364,5 @@ void siftGuess::compute(CPOI &POI_) {
 	tmp_ref.shrink_to_fit();
 	tmp_tar.shrink_to_fit();
 }
+
+/****************************************************************************************/
