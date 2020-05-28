@@ -11,7 +11,6 @@
 
 #include "../Include/MemManager.h"
 #include "../Include/mulDVC.h"
-#include "../Include/matrixIO3D.h"
 #include "../Include/conf.h"
 
 #include <yaml-cpp/yaml.h>
@@ -50,7 +49,7 @@ SIFT_PROCESS Sift_(const string Ref_file_name, const string Tar_file_name, CPaDV
 YAML::Node GetYAMLConfig(std::string path);
 
 int main(int argc, char *argv[]){
-#define VERSION_DESC "Strategy2_CPU"
+#define VERSION_DESC "PiDVC_CPU"
 	if (argc < 2) {
 		std::cerr << "Too few arguments" << std::endl;
 		getchar();
@@ -141,14 +140,6 @@ int main(int argc, char *argv[]){
 	string fileName = sParameter.str() + string(".txt");
 	string resultPath = outputDir + fileName;
 
-	string crefPath = string(""), ctarPath = string(""), frefPath = string(""), ftarPath = string("");
-	if (initMethod == PiSIFT) {
-		//crefPath = outputDir + string("cref_") + fileName;
-		//ctarPath = outputDir + string("ctar_") + fileName;
-		//frefPath = outputDir + string("fref_") + fileName;
-		//ftarPath = outputDir + string("ftar_") + fileName;
-	}
-
 	//read image and set DVC
 	CPaDVC* sepaDVC = nullptr;
 	sepaDVC = CCUPaDVCFactory::CreateCUPaDVC(refImgPath, tarImgPath, subVolSize, numThreads);
@@ -199,7 +190,7 @@ int main(int argc, char *argv[]){
 	std::cout << "Total duration[s]:\t" << duration.count() << "" << std::endl;
 	std::cout << "Press enter to continue..." << std::endl;
 
-	sepaDVC->SaveResult2Text_global_d(resultPath, m_SIFT_TIME, initMethod, crefPath,ctarPath, frefPath,	ftarPath);
+	sepaDVC->SaveResult2Text_global_d(resultPath, m_SIFT_TIME, initMethod);
 
 	delete sepaDVC;
 	return 0;

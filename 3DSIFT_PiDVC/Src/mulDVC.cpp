@@ -596,9 +596,7 @@ void CPaDVC::Strategy3_simple_transfer() {
 
  //-! 4.Output
 void CPaDVC::SaveResult2Text_global_d(const string qstrOutputPath_,
-	SIFT_PROCESS SIFT_TIME, GuessMethod initMethod,
-	const string  c_ref_, const string  c_tar_,
-	const string  f_ref_, const string  f_tar_) {
+	SIFT_PROCESS SIFT_TIME, GuessMethod initMethod) {
 
 	//ofstream oFile;
 	ofstream oFile;
