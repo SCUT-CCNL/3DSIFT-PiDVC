@@ -21,11 +21,15 @@ Copyright (c) 2020 Communication and Computer Network Lab of Guangdong, more det
 
 The steps of running the example data is as follows:
 
-1. Open the visual studio project `.sln` file.
+1. clone the git repository
 
-2. Set the Windows SDK version of the visual studio project to that are installed on your PC. PS: version below  10.0.17763.0 is non-tested.
+2. update the submodule by command `$git submodule foreach git pull origin master`
 
-3. Build and run the program under command line
+3. Open the visual studio project `.sln` file.
+
+4. Set the Windows SDK version of the visual studio project to that are installed on your PC. PS: version below  10.0.17763.0 is non-tested.
+
+5. Build and run the program under command line
 
    - ```bash
      $cd "pathToReleaseDir"
