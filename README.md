@@ -74,7 +74,7 @@ The steps of compiling and running the program is as follows:
 
    - ```bash
      git submodule init
-     git submodule foreach git pull origin master
+     git submodule update
      ```
 
 3. Open the visual studio project `.sln` file.
