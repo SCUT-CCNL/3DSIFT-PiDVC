@@ -1,15 +1,17 @@
 filepath:
   ref:
-    image: D:\SIFT_EXPERI_DATA\Torus\Ref_Transpos.bin
-    key_points: D:\SIFT_EXPERI_LOG\Torus\CKP\Torus_Def_padding_Transpos_Enhance_0.85_ref.txt
+    image: D:\Repos\OpenSource\3DSIFT_PiDVC_mt\Example\Real_test_data\Torus_Ref.nii.gz
+    #output path to store matched reference keypoints
+    key_points: D:\Results\Torus_Def_keypoints_ref.txt
   tar:
-    image: D:\SIFT_EXPERI_DATA\Torus\Def_padding_Transpos.bin
-    key_points: D:\SIFT_EXPERI_LOG\Torus\CKP\Torus_Def_padding_Transpos_Enhance_0.85_tar.txt
-  result_dir: D:\SIFT_EXPERI_LOG\Torus\PiDVC\
-  poi_coor: D:\SIFT_EXPERI_DATA\Torus\POI33.txt
-  sift_mode: Run
+    image: D:\Repos\OpenSource\3DSIFT_PiDVC_mt\Example\Real_test_data\Torus_Def.nii.gz
+    #output path to store matched target keypoints
+    key_points: D:\Results\Torus_Def_keypoints_def.txt
+  result_dir: D:\Results\  #output directory
+  poi_coor: D:\Repos\OpenSource\3DSIFT_PiDVC_mt\Example\Configuration_files\POI33.txt  #the import POI matrix
+  sift_mode: Run  #Run the SIFT and the write the matched keypoints to text
 roi:
-  mode: import
+  mode: import  #import POI mode
   grid_space:
     x: 10
     y: 10
@@ -20,11 +22,11 @@ roi:
     z: 16
 dvc:
   initial:
-    method: PiSIFT
+    method: PiSIFT  #using 3D SIFT aided initial guess method
     ransac_error: 3.20
     ransac_max_iter: 30
     min_neighbor: 16
   iterative:
     icgn_max_iter: 20
     icgn_deltaP: 0.001
-  num_thread: 20
+  num_thread: 16

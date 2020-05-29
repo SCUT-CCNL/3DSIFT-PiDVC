@@ -1,0 +1,38 @@
+filepath:
+  ref:
+    image: D:\Repos\OpenSource\3DSIFT_PiDVC_mt\Example\Simulated_data\Simulated_reference.nii.gz
+    key_points: D:\Results\Simulated_Rotate45_keypoints_ref.txt
+  tar:
+    image: D:\Repos\OpenSource\3DSIFT_PiDVC_mt\Example\Simulated_data\Simulated_deformed_rotate_45degree.nii.gz
+    key_points: D:\Results\Simulated_Rotate45_keypoints_def.txt
+  result_dir:  D:\Results\
+  poi_coor: none
+  sift_mode: Run
+roi:
+  mode: cuboid
+  start_coor:
+    x: 112
+    y: 112
+    z: 50
+  poi_num:
+    x: 80
+    y: 80
+    z: 80
+  grid_space:
+    x: 5
+    y: 5
+    z: 5
+  subset_radius:
+    x: 16
+    y: 16
+    z: 16
+dvc:
+  initial:
+    method: PiSIFT
+    ransac_error: 3.20
+    ransac_max_iter: 30
+    min_neighbor: 16
+  iterative:
+    icgn_max_iter: 20
+    icgn_deltaP: 0.001
+  num_thread: 16

@@ -650,24 +650,28 @@ void CPaDVC::SaveResult2Text_global_d(const string qstrOutputPath_,
 
 	oFile << "Calculation Results: " << endl << endl;
 
-	oFile << "posX" << "," << "posY" << "," << "posZ" << "," << "ZNCC Value" << ","
+	oFile << "posX" << "," << "posY" << "," << "posZ" << "," << "ZNCC_Value" << ","
 		<< "U-displacement" << "," << "V-displacement" << "," << "W-displacement"
 		<< "," << "U0" << "," << "V0" << "," << "W0"
 		<< "," << "Ux" << "," << "Uy" << "," << "Uz"
 		<< "," << "Vx" << "," << "Vy" << "," << "Vz"
 		<< "," << "Wx" << "," << "Wy" << "," << "Wz"
-		<< "," << "Number of Iterations"
-		<< "," << "Range Enough"
-		<< "," << "Candidate Num"
-		<< "," << "Final Ransac Num"
-		//debug for KP
-		<< "," << "Edge Flag"
-		<< "," << "Out_of_ROI_flag"
-		<< "," << "Grayvalue of POI"
-		<< "," << "Mean distance" 
-		<< "," << "Strategy"
-		<< "," << "Converge"
-		<< "," << "searchRadius" << endl;
+
+		<< "," << "IterationNumber"
+        << "," << "OutROIflag"
+        << "," << "Converge"
+
+        << "," << "Strategy"
+		<< "," << "CandidateNum"
+		<< "," << "FinalRansacNum"
+        /*
+        			<< m_POI_global[i].Iteration() << ","
+            << m_POI_global[i].isOutofROI() << ","
+            << m_POI_global[i].GetConverge() << ","
+            << m_POI_global[i].strategy << ","
+            << m_POI_global[i].num_candidate << ","
+            << m_POI_global[i].num_final;*/
+        << endl;
 
 	cout << m_POI_global.size() << endl;
 
@@ -703,29 +707,11 @@ void CPaDVC::SaveResult2Text_global_d(const string qstrOutputPath_,
 			<< P[11] << ","
 			//
 			<< m_POI_global[i].Iteration() << ","
-			<< m_POI_global[i].GetRangeGood() << ","
-			<< m_POI_global[i].num_candidate << ","
-			<< m_POI_global[i].num_final << ","
-			<< m_POI_global[i].GetEdge() << ","
-			<< m_POI_global[i].isOutofROI();
-		//float AffineMatrix[12];
-		//m_POI_global[i].GetAffineMatrix(AffineMatrix);
-
-		/*
-		for (int l = 0; l < 12; ++l)
-		oFile << "," << m_POI_global[i].m_fAffine[l];
-		*/
-		/*
-		oFile << "," << m_fVolT[ELT(m_iOriginVolHeight, m_iOriginVolWidth,
-		k*m_iGridSpaceX + m_iOriginMarginX + m_iSubsetX,	// x
-		j*m_iGridSpaceY + m_iOriginMarginY + m_iSubsetY,	// y
-		i*m_iGridSpaceZ + m_iOriginMarginZ + m_iSubsetZ)];	// z;
-		*/
-		oFile << "," << m_POI_global[i].GrayValue
-			<< "," << m_POI_global[i].Dist
-			<< "," << m_POI_global[i].strategy
-			<< "," << m_POI_global[i].GetConverge()
-			<< "," << m_POI_global[i].search_radius;
+            << m_POI_global[i].isOutofROI() << ","
+            << m_POI_global[i].GetConverge() << ","
+            << m_POI_global[i].strategy << ","
+            << m_POI_global[i].num_candidate << ","
+            << m_POI_global[i].num_final;
 
 		oFile << endl;
 
