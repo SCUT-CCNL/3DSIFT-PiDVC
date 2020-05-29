@@ -9,7 +9,7 @@ The computation of each POI is independent to other POIs in PiDVC . And the loca
 
 
 
-The DVC method aided by 3D SIFT is adaptive to large and complex deformation (*reference [3]*). Besides, the PiDVC method using FFT-CC is also provided (*reference  [1]*).  This work is based on our previous work on SIFT aided PiDIC, readers interested to the SIFT aided method can refer to the *reference [2]*.
+The DVC method aided by 3D SIFT is adaptive to large and complex deformation (*reference [1]*). Besides, the PiDVC method using FFT-CC is also provided (*reference  [2]*).  This work is based on our previous work on SIFT aided PiDIC, readers interested to the SIFT aided method can refer to the *reference [3]*.
 
 This program is written in C++ language and parallelized using OpenMp.
 
@@ -77,13 +77,17 @@ The steps of compiling and running the program is as follows:
      git submodule update
      ```
 
-3. Open the visual studio project `.sln` file.
+3. Open the visual studio project `3DSIFT_PiDVC.sln` file.
 
 4. Set the Windows SDK version of the visual studio project to that are installed on your PC. PS: version below  10.0.17763.0 is non-tested.
 
 5. Build the release version of the program in visual studio
 
 ### Modify input configuration file
+
+> Several example configuration files are prepared in the `Example` directory, users users can download the example data (see *Example data*) and run the program with those example *yml* files.
+>
+> It should be noticed that the path in the example *yml* files must be modified by users.
 
 The configuration files are text files in *yml* format, several example configuration files are provided in path `Example/`.
 
@@ -131,16 +135,17 @@ There are two kinds of ROI settings, users should set `roi` - `mode` as one of t
   - required fields:
 
     - `filepath` - `poi_coor`, the path to text file storing coordinates of POIs. 
-
-  - In the text file, coordinate of each POI occupies a line, and the x,y and z coordinates are listed one by one and are separated by a comma.
-
-  - Example:
-
+  - `roi`-`grid_space`, the space should be reasonable values, because it's used in transfer strategy. If the POI is nonuniformly  distributed, just give reasonable values.
+  
+- In the text file, coordinate of each POI occupies a line, and the x,y and z coordinates are listed one by one and are separated by a comma.
+  
+- Example:
+  
     - ```
       50,60,70
       55,60,70
-      ```
-
+    ```
+  
     - In this example, there are two POIs, the first is at (50,60,70) and the second is at (55,60,70). 
 
 #### Initial estimation settings
@@ -245,11 +250,39 @@ Screenshots of launching the program:
 
 
 
+> Currently, the program requires the reference and the target images are same in dimensions (same sizes along x,y and z dimensions). If the two images are not same in sizes, users might padding some voxels into one of the image to make them same in sizes.
+>
 > Besides, the program requires several *dll* files of the fftw3 library, and those *dll* files would be automatically copied to the *target directory* (i.e. the directory where the generated program is). If the users want to move the program to any other directory, please copy those *dll* files too.
 
 ### Results and analysis
 
+The DVC program print the calculation results and the running information on a automatically generated file under the output directory.
 
+For calculation results of the output file, each line is results of a POI. The results are composed of the following parts.
+
+| Fields of result | Meanings                                                     |
+| ---------------- | ------------------------------------------------------------ |
+| posX             | Coordinate of POI (x-axis)                                   |
+| posY             | Coordinate of POI (y-axis)                                   |
+| posZ             | Coordinate of POI (z-axis)                                   |
+| ZNCC_Value       | ZNCC value of the subvolume under final calculation result   |
+| U-displacement   | Calculated Displacement along x-axis                         |
+| V-displacement   | Calculated Displacement along y-axis                         |
+| W-displacement   | Calculated Displacement along z-axis                         |
+| U0, V0, W0       | Displacements obtained by initial guess                      |
+| Ux, Uy, Uz       | Calculated gradient-component of U along x,y and zaxes       |
+| Vx, Vy, Vz       | Calculated gradient-component of V along x,y and zaxes       |
+| Wx, Wy, Wz       | Calculated gradient-component of W along x,y and zaxes       |
+| IterationNumber  | Iteration times in IC-GN                                     |
+| OutROIflag       | Whether the subvolume out of the image border in IC-GN<br>0 : subvolume inside ROI (safe)<br>1 : subvolume out of ROI (unsafe) |
+| Converge         | Whether the POI is converged <br>0 : not converge<br>1: converge |
+| Strategy         | The initial guess strategies: <br>1, 2 or 3: 3D SIFT aided method using nearby keypoints around POI<br>10 : FFT-CC method<br>30 : transfer strategy for POIs without enough keypoints<br>100 : pre-set initial values |
+| CandidateNum     | The number of nearby keypoints around POI                    |
+| FinalRansacNum   | The size of consensus set after RANSAC on the nearby keypoints |
+
+
+
+An example matlab script of reading calculation results and visualize the output is provided in `Example/Script`;
 
 ## Example data
 
@@ -275,8 +308,9 @@ The following libraries are used in this work, and are already included in this 
 
 If you want to cite this work, please refer to the papers as follows.
 
-[1]  Wang, T., Jiang, Z., Kemao, Q., Lin, F., & Soon, S. H. (2016). GPU accelerated digital volume correlation. *Experimental Mechanics*, *56*(2), 297-309. 
+[1] Our paper in preparation.
 
-[2] Yang, J., Huang, J., Jiang, Z., Dong, S., Tang, L., Liu, Y., ... & Zhou, L. (2020). SIFT-aided path-independent digital image correlation accelerated by parallel computing. *Optics and Lasers in Engineering*, *127*, 105964.
+[2] Wang, T., Jiang, Z., Kemao, Q., Lin, F., & Soon, S. H. (2016). GPU accelerated digital volume correlation. *Experimental Mechanics*, *56*(2), 297-309. 
 
-[3] Our paper in preparation.
+[3] Yang, J., Huang, J., Jiang, Z., Dong, S., Tang, L., Liu, Y., ... & Zhou, L. (2020). SIFT-aided path-independent digital image correlation accelerated by parallel computing. *Optics and Lasers in Engineering*, *127*, 105964.
+
