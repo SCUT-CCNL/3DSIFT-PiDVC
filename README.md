@@ -248,7 +248,7 @@ Screenshots of launching the program:
 
 2. using *cmd* on windows
 
-![launching-using-cmd](.assert\image-20200528235057629.png?raw=true "Screenshot-of-launching-using-cmd")
+![launching-using-cmd](.assert/image-20200528235057629.png?raw=true "Screenshot-of-launching-using-cmd")
 
 
 
