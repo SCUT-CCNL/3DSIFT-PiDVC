@@ -9,7 +9,7 @@ The computation of each POI is independent to other POIs in PiDVC . And the loca
 
 
 
-The DVC method aided by 3D SIFT is adaptive to large and complex deformation (*reference [1]*). Besides, the PiDVC method using FFT-CC is also provided (*reference  [2]*).  This work is based on our previous work on SIFT aided PiDIC, readers interested to the SIFT aided method can refer to the *reference [3]*.
+The DVC method aided by [3D SIFT](https://github.com/SCUT-CCNL/3DSIFT) is adaptive to large and complex deformation (*reference [1]*). Besides, the PiDVC method using FFT-CC is also provided (*reference  [2]*).  This work is based on our previous work on SIFT aided PiDIC, readers interested to the SIFT aided method can refer to the *reference [3]*.
 
 This program is written in C++ language and parallelized using OpenMp.
 
@@ -144,9 +144,11 @@ There are two kinds of ROI settings, users should set `roi` - `mode` as one of t
     - ```
       50,60,70
       55,60,70
-    ```
-  
+      ```
+  ```
+      
     - In this example, there are two POIs, the first is at (50,60,70) and the second is at (55,60,70). 
+    ```
 
 #### Initial estimation settings
 
@@ -242,11 +244,11 @@ Screenshots of launching the program:
 
 1. using *bash* on windows
 
-![image-20200528234519400](.assert\image-20200528234519400.png)
+![launching-using-bash](.assert/image-20200528234519400.png?raw=true "Screenshot-of-launching-using-bash")
 
 2. using *cmd* on windows
 
-![image-20200528235057629](.assert\image-20200528235057629.png)
+![launching-using-cmd](.assert\image-20200528235057629.png?raw=true "Screenshot-of-launching-using-cmd")
 
 
 
@@ -296,7 +298,7 @@ https://drive.google.com/open?id=1IlOBp1hu-KUh648lXR3YjgNih71Mj8ke
 
 The following libraries are used in this work, and are already included in this project files.
 
-- [3D SIFT](https://github.com/ParallelCCNL/3DSIFT_mt), our  project of multi-thread 3D SIFT, imported as a submodule in `3DSIFT_PiDVC\3DSIFT`, to perform SIFT feature extraction and matching.
+- [3D SIFT](https://github.com/SCUT-CCNL/3DSIFT), our  project of multi-thread 3D SIFT, imported as a submodule in `3DSIFT_PiDVC\3DSIFT`, to perform SIFT feature extraction and matching.
 - [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page), put in path `3DSIFT_PiDVC\3party\Eigen`, used to perform matrix  computation, such as fitting affine transform.
 - [KdTree]( https://github.com/jtsiomb/kdtree ), put in path `3DSIFT_PiDVC\3party\kdTree`, used to accelerate the searching nearby keypoints (3D coordinates)
 - [yaml-cpp]( https://github.com/jbeder/yaml-cpp ), put in path`3DSIFT_PiDVC\3party\yaml-cpp` , to parse the input yml file 
