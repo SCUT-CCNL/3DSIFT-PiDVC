@@ -1,3 +1,3 @@
 [submodule "3DSIFT_PiDVC/3DSIFT"]
 	path = 3DSIFT_PiDVC/3DSIFT
-	url = git@github.com:ParallelCCNL/3DSIFT_mt.git
+	url = git@github.com:SCUT-CCNL/3DSIFT.git
