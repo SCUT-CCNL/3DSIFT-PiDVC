@@ -350,4 +350,4 @@ MigrationBackup/
 .ionide/
 
 3DSIFT_PiDVC/My Advisor Results - 3DSIFT_PiDVC/
-.nii.gz
+*.nii.gz
