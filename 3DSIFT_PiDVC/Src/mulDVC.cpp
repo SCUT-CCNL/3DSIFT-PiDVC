@@ -253,21 +253,19 @@ void CPaDVC::PiDVCAlgorithm_mul_global_STRATEGY() {
 			cout << "Processing POI " << i / int(m_POI_global.size() / 10) << "0%" << endl;
 		}
 	}
-	double t_ICGN_End = omp_get_wtime();
-	cout << "----!4.Finish ICGN in " << t_ICGN_End - t_aff1 << "s" << endl;
 
 	//-------------------- Back-up Strategy for SIFT-aided--------------------
-	//-! 5. Strategy 3
+	//-! Back-up Strategy
 	Strategy3_simple_transfer();
-	double t_Strategy3_End = omp_get_wtime();
-	cout << "----!5.Finish Strategy3 in " << t_Strategy3_End - t_ICGN_End << "s" << endl;
+
+    double t_ICGN_End = omp_get_wtime();
+    cout << "----!4.Finish 3D IC-GN Registration in " << t_ICGN_End - t_aff1 << "s" << endl;
 
 	m_Timer.dPreparationTime = (t_PreICGN_end - t1);
 	m_Timer.dPrecomputationTime = (t_Precompute_End - t_Prefilter_start);
 	m_Timer.dBuildKDTreeTime = t_kdtree_end - t_Precompute_End;
 	m_Timer.dLocalAffineTime = (t_aff1 - t_kdtree_end);
 	m_Timer.dICGNTime = (t_ICGN_End - t_aff1);
-	m_Timer.dTransferStrategyTime = (t_Strategy3_End - t_ICGN_End);
 	m_Timer.dConsumedTime = omp_get_wtime() - t1;
 	m_bIsExecuted = true;
 }
@@ -637,14 +635,13 @@ void CPaDVC::SaveResult2Text_global_d(const string qstrOutputPath_,
 	oFile << SIFT_TIME << endl;
 
 	oFile << "Time:" << endl;
-	oFile << "Preparation, Precomputation, Build KD-Tree, AFfine Calculation, FFT-CC, ICGN Calculation, Transfer, Total" << endl;
+	oFile << "Preparation, Precomputation, Build KD-Tree, AFfine Calculation, FFT-CC, ICGN Calculation, Total" << endl;
 	oFile << m_Timer.dPreparationTime << ","
 		<< m_Timer.dPrecomputationTime << ","
 		<< m_Timer.dBuildKDTreeTime << ","
 		<< m_Timer.dLocalAffineTime << ","
 		<< m_Timer.dFFTCcTime << ","
 		<< m_Timer.dICGNTime << ","
-		<< m_Timer.dTransferStrategyTime << ","
 		<< m_Timer.dConsumedTime << endl;
 
 

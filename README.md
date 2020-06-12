@@ -74,7 +74,7 @@ The steps of compiling and running the program is as follows:
 
    - ```bash
      git submodule init
-     git submodule update
+     git submodule update --progress
      ```
 
 3. Open the visual studio project `3DSIFT_PiDVC.sln` file.
@@ -148,7 +148,7 @@ There are two kinds of ROI settings, users should set `roi` - `mode` as one of t
   ```
       
     - In this example, there are two POIs, the first is at (50,60,70) and the second is at (55,60,70). 
-    ```
+  ```
 
 #### Initial estimation settings
 

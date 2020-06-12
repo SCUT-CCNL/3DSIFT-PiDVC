@@ -49,9 +49,6 @@ struct TimerPara
 	//iterative
 	double dICGNTime = 0.0;
 	
-	//strategy 3
-	double dTransferStrategyTime = 0.0;
-	
 	double dConsumedTime = 0.0;
 	double dFinalizationTime = 0.0;
 };
