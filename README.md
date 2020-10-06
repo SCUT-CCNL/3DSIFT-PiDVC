@@ -310,7 +310,7 @@ The following libraries are used in this work, and are already included in this 
 
 If you want to cite this work, please refer to the papers as follows.
 
-[1] Yang J, Huang J, Jiang Z, Dong S, Tang L, Liu Y, Liu Z, Zhou L. 3D SIFT aided path independent digital volume correlation and its GPU acceleration. Optics and Lasers in Engineering. In press.
+[1] Yang J, Huang J, Jiang Z, Dong S, Tang L, Liu Y, Liu Z, Zhou L. 3D SIFT aided path independent digital volume correlation and its GPU acceleration. Optics and Lasers in Engineering. (2021) 136:106323.
 
 [2] Yang J, Huang J, Jiang Z, Dong S, Tang L, Liu Y, Liu Z, Zhou L. SIFT-aided path-independent digital image correlation accelerated by parallel computing. Optics and Lasers in Engineering. (2020) 127:105964. 
 
